@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Edit Existing Memorial</title>
+<meta charset="UTF-8">
+<style>
+  .form {
+    border: 2px solid black;
+    margin-top: 3vh;
+    padding: 5px;
+    width: 90vw;
+    font-size: 2vh;
+    margin-left: 5vw;
+    text-align: center;
+    background-color: lightgray;
+  }
+   .info {
+    border: 2px solid black;
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 2vh;
+    background-color: white;
+  }
+  input {
+    margin: 0.5vh;
+    text-align: center;
+    background-color: yellow;
+  }
+  #submit{
+    margin-left: 45vw;
+    background-color: yellow;
+    height: 6vh;
+    width: 10vw;
+    border-radius: 5px;
+    font-size: 3vh;
+    margin-top: 3vh;
+  }
+  h2 {
+    text-align: center;
+  }
+
+
+</style>
+</head>
+<body>
+
+<h2>Edit</h2>
+<form action = "/editpage" method = "POST">
+  {% csrf_token %}
+Profile image: {{subject.profile_image}}<input type = "text" name = "profile_image" placeholder = "url"><br>
+Name: {{subject.subject_name}}<input type = "text" name = "subject_name" placeholder = "your text"><br>
+Birthday: {{subject.birthday}}<input type = "text" name = "birthday" placeholder = "your text"><br>
+Death Date: {{subject.death_date}}<input type = "text" name = "death_date" placeholder = "your text"><br>
+Have a slideshow?{{subject.slideshow}}<input type = "text" name = "slideshow" placeholder = "url"><br>
+Have a Gofundme?{{subject.gofundme}}<input type = "text" name = "gofundme" placeholder = "url"><br>
+Obituary image url: {{obituary.obituary_image}}<input type = "text" name = "obituary_image" placeholder = "url"><br>
+About: {{obituary.subject_description}}<input type = "text" name = "subject_description" placeholder = "your text"><br>
+Surviving family: {{obituary.subject_family}}<input type = "text" name = "subject_family" placeholder = "your text"><br>
+Funeral information: {{obituary.funeral_information}}<input type = "text" name = "funeral_information" placeholder = "your text"><br>
+<input type = "submit">
+</form>
+<h2>Images</h2>
+<form action = "/deleteimage" method = "POST">
+  {% csrf_token %}
+{% for image in images %}
+	{{image.image}}<input type = "submit" value= "delete"><input type = "hidden" name = "image" value = "{{image.id}}">
+{% endfor %}
+</form>
+<h2>Condolences</h2>
+<form action = "/deletecondolence" method = "POST">
+  {% csrf_token %}
+{% for condolence in condolences %}
+	{{condolence.condolence}}<input type = "submit" value= "delete"><input type = "hidden" name = "condolence" value = "{{condolence.id}}">
+{% endfor %}
+</form>
+<h2>Stories</h2>
+<form action = "/deletestory" method = "POST">
+  {% csrf_token %}
+{% for story in stories %}
+	"{{story.story}}" by {{story.author}}<input type = "submit" value= "delete"><input type = "hidden" name = "story" value = "{{story.id}}">
+{% endfor %}
+</form>
+<h2>Friends</h2>
+<form action = "/deletefriend" method = "POST">
+  {% csrf_token %}
+{% for friend in friends %}
+	{{friend.name}}<input type = "submit" value= "delete"><input type = "hidden" name = "friend" value = "{{friend.id}}">
+	
+{% endfor %}
+</form>
+
+
+
+</body>
+</html>
