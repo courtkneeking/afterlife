@@ -477,7 +477,7 @@ h1, h2, h5, h6 {
 <div class = "height" >
   <div class="half">
     <h5 id = "info"> Info </h5>
-    <button style = "display:inline-block;" class="popup" onclick="myFunction()">�
+    <button style = "display:inline-block;" class="popup" onclick="myFunction('obituary_info')">�
         <span class="popuptext" id="obituary_info">Use the navigation bar above or scroll thorugh the page. There will be info boxes along the way for additional guidance. If there is a gofundme widget on this page, it was created by the family of the decaased to help cover funeral expenses. </span></button>
     <div class = "obituary">
       <h2 style = "color:black; text-align:center; margin:1vh 0;">{{subject.subject_name}}</h2>
@@ -493,7 +493,7 @@ h1, h2, h5, h6 {
   </div>
   <div class="half" >
     <h5 id = "memories"> Memories </h5>
-      <button style = "margin-left:1vw;display:inline-block;" class="popup" onclick="myFunction()">�
+      <button style = "margin-left:1vw;display:inline-block;" class="popup" onclick="myFunction('memories_info')">�
         <span class="popuptext" id="memories_info">You can post in any of the fields below, just click on their headings, enter your post and click submit</span></button>
     
     <div class = "inhalf">
@@ -549,7 +549,7 @@ h1, h2, h5, h6 {
 <!-- slideshow -->
 <div class="height">
   <h5 id = "slideshow"> Slideshow </h5>
-    <button style = "margin-left: 1vw;" class="popup" onclick="myFunction()">�
+    <button style = "margin-left: 1vw;" class="popup" onclick="myFunction('slideshow_info')">�
         <span class="popuptext" id="slideshow_info">If you did not already provide a slideshow link, one will be automatically generated from the pictures uploaded by friends and family in the box below.</span></button>
   {% if subject.slideshow %}
   <iframe 
@@ -629,14 +629,11 @@ for (i = 0; i < acc.length; i++) {
     });
 }
 </script>
+
 <script>
 // When the user clicks on div, open the popup
-function myFunction() {
-    var popup = document.getElementById("obituary_info");
-    popup.classList.toggle("show");
-    var popup = document.getElementById("memories_info");
-    popup.classList.toggle("show");
-    var popup = document.getElementById("slideshow_info");
+function myFunction(message) {
+    popup = document.getElementById(message)
     popup.classList.toggle("show");
 }
 </script>

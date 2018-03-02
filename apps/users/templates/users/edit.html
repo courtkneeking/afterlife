@@ -4,92 +4,198 @@
 <title>Edit Existing Memorial</title>
 <meta charset="UTF-8">
 <style>
-  .form {
-    border: 2px solid black;
-    margin-top: 3vh;
-    padding: 5px;
-    width: 90vw;
-    font-size: 2vh;
-    margin-left: 5vw;
+h1 {
     text-align: center;
-    background-color: lightgray;
+    display: inline-block;
+    margin-left: 40vw;
+    margin-right: 2vw;
+    margin-bottom: 5vh;
   }
-   .info {
-    border: 2px solid black;
-    margin-top: 10px;
-    padding: 5px;
-    font-size: 2vh;
-    background-color: white;
-  }
-  input {
-    margin: 0.5vh;
-    text-align: center;
-    background-color: yellow;
-  }
-  #submit{
-    margin-left: 45vw;
-    background-color: yellow;
-    height: 6vh;
-    width: 10vw;
-    border-radius: 5px;
-    font-size: 3vh;
-    margin-top: 3vh;
-  }
-  h2 {
-    text-align: center;
-  }
+h2 {
+  display: inline-block;
+}
+input {
+  text-align: center;
+  background-color: #eee;
+  border-radius: 5px;
+}
+#submit{
+  margin-left: 45vw;
+  background-color: yellow;
+  height: 6vh;
+  width: 10vw;
+  border-radius: 5px;
+  margin-top: 3vh;
+}
 
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 3vh;
+  transition: 0.4s;
+  margin-bottom: 1vh;
+}
+.active, .accordion:hover {
+  background-color: #ccc; 
+}
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: scroll;
+  margin-bottom: 2vh;
+}
+
+.popup {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0;
+    height: 2vh;
+}
+
+.popup .popuptext {
+    visibility: hidden;
+    width: 40vw;
+    background-color: white;
+    color: black;
+    text-align: center;
+    border-radius: 6px;
+    opacity: 0.5;
+    overflow: scroll;
+}
+.popup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
 
 </style>
 </head>
 <body>
 
-<h2>Edit</h2>
-<form action = "/editpage" method = "POST">
-  {% csrf_token %}
-Profile image: {{subject.profile_image}}<input type = "text" name = "profile_image" placeholder = "url"><br>
-Name: {{subject.subject_name}}<input type = "text" name = "subject_name" placeholder = "your text"><br>
-Birthday: {{subject.birthday}}<input type = "text" name = "birthday" placeholder = "your text"><br>
-Death Date: {{subject.death_date}}<input type = "text" name = "death_date" placeholder = "your text"><br>
-Have a slideshow?{{subject.slideshow}}<input type = "text" name = "slideshow" placeholder = "url"><br>
-Have a Gofundme?{{subject.gofundme}}<input type = "text" name = "gofundme" placeholder = "url"><br>
-Obituary image url: {{obituary.obituary_image}}<input type = "text" name = "obituary_image" placeholder = "url"><br>
-About: {{obituary.subject_description}}<input type = "text" name = "subject_description" placeholder = "your text"><br>
-Surviving family: {{obituary.subject_family}}<input type = "text" name = "subject_family" placeholder = "your text"><br>
-Funeral information: {{obituary.funeral_information}}<input type = "text" name = "funeral_information" placeholder = "your text"><br>
-<input type = "submit">
-</form>
-<h2>Images</h2>
-<form action = "/deleteimage" method = "POST">
-  {% csrf_token %}
-{% for image in images %}
-	{{image.image}}<input type = "submit" value= "delete"><input type = "hidden" name = "image" value = "{{image.id}}">
-{% endfor %}
-</form>
-<h2>Condolences</h2>
-<form action = "/deletecondolence" method = "POST">
-  {% csrf_token %}
-{% for condolence in condolences %}
-	{{condolence.condolence}}<input type = "submit" value= "delete"><input type = "hidden" name = "condolence" value = "{{condolence.id}}">
-{% endfor %}
-</form>
-<h2>Stories</h2>
-<form action = "/deletestory" method = "POST">
-  {% csrf_token %}
-{% for story in stories %}
-	"{{story.story}}" by {{story.author}}<input type = "submit" value= "delete"><input type = "hidden" name = "story" value = "{{story.id}}">
-{% endfor %}
-</form>
-<h2>Friends</h2>
-<form action = "/deletefriend" method = "POST">
-  {% csrf_token %}
-{% for friend in friends %}
-	{{friend.name}}<input type = "submit" value= "delete"><input type = "hidden" name = "friend" value = "{{friend.id}}">
-	
-{% endfor %}
-</form>
+<h1>Edit Page</h1><h2 class="popup" style = "margin-top: 2vh;" onclick="myFunction('edit_info')"> �<span class="popuptext" id="edit_info">click on</span></h2>
+<div class = "accordion">
+  Person's Details
+</div>
+<div class = "panel">
+  <form action = "/editpage" method = "POST">
+    {% csrf_token %}
+    <p class="popup" style = "margin-top: 2vh;" onclick="myFunction('profile_info')"> Profile: <input type = "text" name = "profile_image" placeholder = "url">
+      <span class="popuptext" id="profile_info">{{subject.profile_image}}</span></p><br>
+    <p class="popup" onclick="myFunction('name_info')"> Name: <input type = "text" name = "subject_name" placeholder = "text">
+      <span class="popuptext" id="name_info">{{subject.subject_name}}</span></p><br>
+    <p class="popup" onclick="myFunction('birthday_info')"> Birthday: <input type = "text" name = "birthday" placeholder = "text">
+      <span class="popuptext" id="birthday_info">{{subject.birthday}}</span></p><br>
+    <p class="popup" onclick="myFunction('death_info')"> Death Date: <input type = "text" name = "death_date" placeholder = "your text">
+      <span class="popuptext" id="death_info">{{subject.death_date}}</span></p><br>
+    <p class="popup" onclick="myFunction('slideshow_info')"> Slideshow: <input type = "text" name = "slideshow" placeholder = "url">
+      <span class="popuptext" id="slideshow_info">{{subject.slideshow}}</span></p><br>
+    <p class="popup" onclick="myFunction('gofundme_info')"> Gofundme: <input type = "text" name = "gofundme" placeholder = "url">
+      <span class="popuptext" id="gofundme_info">{{subject.gofundme}}</span></p><br>
+    <p class="popup" onclick="myFunction('obituary_image_info')"> Obituary image: <input type = "text" name = "obituary_image" placeholder = "url">
+      <span class="popuptext" id="obituary_image_info">{{obituary.obituary_image}}</span></p><br>
+    <p class="popup" onclick="myFunction('obituary_desc_info')"> Obituary description: <input type = "text" name = "subject_description" placeholder = "your text">
+      <span class="popuptext" id="obituary_desc_info">{{obituary.subject_description}}</span></p><br>
+    <p class="popup" onclick="myFunction('obituary_family_info')"> Obituary Surviving Family: <input type = "text" name = "subject_family" placeholder = "your text">
+      <span class="popuptext" id="obituary_family_info">{{obituary.subject_family}}</span></p><br>
+    <p class="popup" onclick="myFunction('obituary_funeral_info')"> Obituary Funeral information: <input type = "text" name = "funeral_information" placeholder = "your text">
+      <span class="popuptext" id="obituary_funeral_info">{{obituary.funeral_information}}</span></p><br>
+  <input type = "submit">
+  </form>
+</div>
 
+<div class = "accordion">
+  Images
+</div>
+<div class = "panel">
+  <form action = "/deleteimage" method = "POST">
+    {% csrf_token %}
+  {% for image in images %}
+  	{{image.image}}<input type = "submit" value= "delete"><input type = "hidden" name = "image" value = "{{image.id}}"><br>
+  {% endfor %}
+  </form>
+</div>
 
+<div class = "accordion">
+  Condolences
+</div>
+<div class = "panel">
+  <form action = "/deletecondolence" method = "POST">
+    {% csrf_token %}
+  {% for condolence in condolences %}
+  	{{condolence.condolence}}<input type = "submit" value= "delete"><input type = "hidden" name = "condolence" value = "{{condolence.id}}"><br>
+  {% endfor %}
+  </form>
+</div>
+
+<div class = "accordion">
+  Stories
+</div>
+<div class = "panel">
+  <form action = "/deletestory" method = "POST">
+    {% csrf_token %}
+  {% for story in stories %}
+  	"{{story.story}}" by {{story.author}}<input type = "submit" value= "delete"><input type = "hidden" name = "story" value = "{{story.id}}"><br>
+  {% endfor %}
+  </form>
+</div>
+<div class = "accordion">
+  Friends
+</div>
+<div class = "panel">
+  <form action = "/deletefriend" method = "POST">
+    {% csrf_token %}
+  {% for friend in friends %}
+  	{{friend.name}}<input type = "submit" value= "delete"><input type = "hidden" name = "friend" value = "{{friend.id}}">
+  {% endfor %}
+  </form>
+</div>
+<div class = "accordion">
+ Edit Settings
+</div>
+<div class = "panel">
+  <a href = "/delete">Add password</a><br>
+  <a href = "/delete">Disable Add ons</a><br>
+</div>
+<div class = "accordion">
+  Delete Page
+</div>
+<div class = "panel">
+  <a href = "/delete">Confirm Delete</a>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}
+</script>
+<script>
+// When the user clicks on div, open the popup
+function myFunction(message) {
+    popup = document.getElementById(message)
+    popup.classList.toggle("show");
+}
+</script>
 
 </body>
 </html>

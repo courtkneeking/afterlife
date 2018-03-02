@@ -18,7 +18,7 @@
   border: 2px solid black;
   margin-top: 10px;
   padding: 5px;
-  font-size: 10px;
+  font-size: 10px !important;
   background-color: white;
 }
 input {
@@ -38,15 +38,25 @@ input {
 h2{
   text-align: center;
 }
+h1 {
+  text-align: center;
+  margin-top: 5vh;
+}
+@media only screen and (min-width: 1000px){
+  .info {
+  font-size: 20px !important;
+  }
+}
+
 </style>
 <body>
-<h2>Create New Page</h2>
+<h1>Create New Page</h1>
 <form action = "/submit" method = "POST">
   {% csrf_token %}
 <div class = "form">
     <h2>Details of your loved one</h2>
     Name: <input type = "text" name = "subject_name" placeholder = "your text">
-    Birthday: <input type = "text" name = "birthday" placeholder = "your text">
+    Birthday: <input type = "text" name = "birthday" placeholder = "your text"><br>
     Death Date: <input type = "text" name = "death_date" placeholder = "your text">
     Main image: <input type = "text" name = "profile_image" placeholder = "url">
     <div class = "info">
@@ -65,8 +75,8 @@ h2{
 
 <div class = "form">
     <h2>Create Obituary</h2>
-    Obituary image url: <input type = "text" name = "obituary_image" placeholder = "url">
-    About: <input type = "text" name = "subject_description" placeholder = "your text">
+    Obituary image: <input type = "text" name = "obituary_image" placeholder = "url">
+    About: <input type = "text" name = "subject_description" placeholder = "your text"><br>
     Surviving family: <input type = "text" name = "subject_family" placeholder = "your text">
     Funeral information: <input type = "text" name = "funeral_information" placeholder = "your text">
     <div class = "info">
