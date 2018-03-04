@@ -3,7 +3,15 @@
 <title>Add new memorial</title>
 <meta charset="UTF-8">
 <style>
-
+*{
+  margin: 0;
+  padding: 0;
+}
+#shell {
+  background-color: #a1aeb7;
+  height: 100vh;
+  width: 100vw;
+}
 .form {
   border: 2px solid black;
   margin-top: 3vh;
@@ -12,44 +20,64 @@
   font-size: 2vh;
   margin-left: 5vw;
   text-align: center;
-  background-color: lightgray;
+  background-color: #e3dcdc;
 }
 .info {
   border: 2px solid black;
   margin-top: 10px;
   padding: 5px;
-  font-size: 10px !important;
+  font-size: 20px;
   background-color: white;
+  padding: 10px;
 }
 input {
   margin: 0.5vh;
   text-align: center;
-  background-color: yellow;
 }
 #submit{
   margin-left: 45vw;
-  background-color: yellow;
-  height: 6vh;
-  width: 10vw;
+  height: 5vh;
+  width: 12vw;
   border-radius: 5px;
   font-size: 2vw;
   margin-top: 3vh;
 }
 h2{
   text-align: center;
+  margin: 1vh;
 }
 h1 {
   text-align: center;
   margin-top: 5vh;
+  font-size: 4vh;
 }
-@media only screen and (min-width: 1000px){
-  .info {
-  font-size: 20px !important;
+img {
+  max-height: 20%;
+  max-width: 40%;
+  top: 2vh;
+  left:2vw;
+  position:absolute;
+  opacity: 0.8;
+}
+#header {
+  height: 10vh;
+}
+@media only screen and (min-width: 1100px){
+  h1 {
+    margin:2vh;
+  }
+  img{
+    max-height: 13%;
+    max-width: 30%;
   }
 }
 
 </style>
 <body>
+<div id = "shell">
+  <div id = "header">
+    <img src = "https://i.imgur.com/6dCg1V4.png">
+  </div>
 <h1>Create New Page</h1>
 <form action = "/submit" method = "POST">
   {% csrf_token %}
@@ -85,6 +113,7 @@ h1 {
 </div>
 <input id = "submit" type = "submit" value = "submit">
 </form>
+</div>
 
 </body>
 </html>
