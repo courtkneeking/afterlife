@@ -146,6 +146,10 @@ def editpage(request):
 		obituary.save()
 	return redirect('/display/{}'.format(subject_id))
 
+def displayslideshow(request):
+	return render(request, "users/slideshow.html")	
+
+
 
 
 

@@ -18,5 +18,5 @@ urlpatterns = [
 	url(r'^deletecondolence$', views.deletecondolence),
 	url(r'^deletecondolence$', views.deletecondolence),
 	url(r'^editpage$', views.editpage),
-
+	url(r'^slideshow$', views.displayslideshow),
 ]
